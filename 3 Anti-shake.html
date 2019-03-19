@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>防抖和节流</title>
+    <style>
+        html,body {
+            margin:0;
+            padding:0;
+        }
+        #container{
+            width: 100%; 
+            height: 200px; 
+            line-height: 200px; 
+            text-align: center; 
+            color: #fff; 
+            background-color: #444; 
+            font-size: 30px;
+        }
+        #container2{
+            width: 100%; 
+            height: 200px; 
+            margin-top:10px;
+            line-height: 200px; 
+            text-align: center; 
+            color: #fff; 
+            background-color: #444; 
+            font-size: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <div id="container2"></div>
+</body>
+
+<script>
+    /*
+    * 什么是防抖和节流
+    * 
+    * 经常会触发的事件
+    * window 的 resize、scroll
+    * mousedown、mousemove、mouseover
+    * keyup、keydown
+    * 如果太频繁会出现卡顿情况
+    * 两种解决方案：防抖和节流
+    */
+
+    var count = 1;
+    var container = document.getElementById('container');
+
+    function getUserAction(e) {
+        console.log(e,this)
+        container.innerHTML = count++;
+    };
+
+    container.onmousemove = getUserAction;
+
+    /*
+    * 防抖原理：触发时间后n秒才执行，以最后一次触发开始算,否者一直保持
+    */
+    var count2 = 1;
+    var container2 = document.getElementById('container2');
+
+    function getUserAction2 (e){
+        console.log(e,this)
+        container2.innerHTML = count2++;
+    }
+    function debounce(fn,wait){
+        let timeout;
+        return function(){
+            clearTimeout(timeout);
+            timeout = setTimeout(fn,wait);
+        }
+    }
+
+    /**
+     *  this 指向
+     *  event 对象
+     *  
+    */
+
+   function debounce2(fn,wait){
+        let timeout;
+        return function(){
+            var that = this;
+            var arg = arguments;
+            clearTimeout(timeout);
+            timeout = setTimeout(function(){
+                fn.apply(that,arg)
+            },wait);
+        }
+    }
+
+    container2.onmousemove = debounce2(getUserAction2,500);
+
+    
+
+    
+
+
+
+
+    
+
+</script>
+</html>

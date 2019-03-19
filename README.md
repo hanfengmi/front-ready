@@ -4,3 +4,6 @@ Learn more and earn more.
 
 
 2.['1', '2', '3'].map(parseInt)
+
+
+3.防抖和节流
