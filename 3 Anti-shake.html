@@ -96,7 +96,27 @@
 
     container2.onmousemove = debounce2(getUserAction2,500);
 
-    
+    /**
+     * 节流原理：持续触发事件，每隔一段时间，只执行一次事件
+     * 实现：一种是使用时间戳，一种是设置定时器。
+    */
+
+   function throttle(func, wait) {
+        var timeout;
+        var previous = 0;
+
+        return function() {
+            context = this;
+            args = arguments;
+            if (!timeout) {
+                timeout = setTimeout(function(){
+                    timeout = null;
+                    func.apply(context, args)
+                }, wait)
+            }
+
+        }
+    }
 
     
 
